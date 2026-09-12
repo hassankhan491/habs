@@ -9,14 +9,13 @@ import CollectionSegments from "@/components/website/sections/about/CollectionSe
 import TheAtelier from "@/components/website/sections/about/TheAtelier";
 
 export const metadata: Metadata = {
-  title: "Our Story | SHAWQ Fragrances - The Art of Scent",
+  title: "Our Story | HABS Shoes - Step Into Your Style",
   description:
-    "Discover the editorial story behind SHAWQ Fragrances. Handcrafted luxury Extrait de Parfums from Karachi, Pakistan.",
+    "Discover the story behind HABS Shoes. Curated footwear bringing style, quality, and individuality to every step.",
   openGraph: {
-    title: "Our Story | SHAWQ Fragrances",
-    description: "The artistry, heritage, and soul behind SHAWQ Fragrances.",
-    type: "website",
-    locale: "en_US",
+    title: "Our Story | HABS Shoes",
+    description:
+      "The story, style, and vision behind HABS Shoes.",
   },
 };
 

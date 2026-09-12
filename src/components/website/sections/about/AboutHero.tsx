@@ -46,9 +46,8 @@ export default function AboutHero() {
           </h1>
 
           <p className="mt-8 max-w-xl text-base leading-[2] text-[#E8DED0]/70">
-            SHAWQ is born from a uncompromising dedication to liquid poetry. 
-            We bypass ordinary perfumery constraints, curating private extraits 
-            that capture the depth of the East with modernist architectural precision.
+            HABS is born from an uncompromising passion for footwear and individual style.
+            We go beyond ordinary choices, curating distinctive pairs that bring together timeless design, everyday comfort, and modern streetwear culture — made for those who want every step to make a statement.
           </p>
 
           <div className="mt-12 flex items-center gap-8">
@@ -69,7 +68,7 @@ export default function AboutHero() {
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm bg-[#1A1816] shadow-2xl">
             <Image
               src="/images/about-1.jpeg"
-              alt="SHAWQ luxury extrait flacon"
+              alt="HABS Shoes - The Anatomy of Footwear"
               fill
               priority
               sizes="(max-width: 1024px) 92vw, 50vw"

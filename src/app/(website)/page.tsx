@@ -1,13 +1,9 @@
 // src/app/(webiste)/page.tsx
 import HeroSection from '@/components/website/sections/home/HeroSection';
-import CategorySection from "@/components/website/sections/home/CategorySection";
 import EmpoweringSection from '@/components/website/sections/home/EmpoweringSection';
-import SignatureCollectionSection from '@/components/website/sections/home/SignatureCollectionSection';
-import ProductShowcase from '@/components/website/sections/home/ProductShowcase';
-import BestSellersSections from "@/components/website/sections/home/BestSellersSections";
 import NewsletterSection from "@/components/website/sections/home/NewsletterSection";
-import ShawqStorySection  from "@/components/website/sections/home/ShawqStorySection";
-import ShawqManifesto from "@/components/website/sections/home/ShawqManifesto";
+import FeaturedDrops from "@/components/website/sections/home/FeaturedDrops";
+import CoverflowCarousel from "@/components/website/sections/home/CoverflowCarousel";
 
 
 export default function HomePage() {
@@ -16,19 +12,11 @@ export default function HomePage() {
 
       <HeroSection />
 
-      <CategorySection />
-
-      <ShawqStorySection  />
-      
-      <SignatureCollectionSection />
+      <FeaturedDrops />
 
       <EmpoweringSection />
 
-      <ShawqManifesto />
-
-      <ProductShowcase />
-
-       <BestSellersSections />
+      <CoverflowCarousel />
 
       <NewsletterSection />
 

@@ -5,8 +5,8 @@ import LenisProvider from "@/components/providers/LenisProvider";
 
 export const metadata: Metadata = {
   title: {
-    default: "Shawq",
-    template: "%s | Shawq",
+    default: "Habs",
+    template: "%s | Habs",
   },
   description: "Your description here",
 };

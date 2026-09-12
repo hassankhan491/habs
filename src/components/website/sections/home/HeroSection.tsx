@@ -1,289 +1,296 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useLayoutEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
+const products = [
+  {
+    id: 1,
+    brand: "PUMA",
+    name: "SPRING STEP",
+    headline: ["UNMATCHED COMFORT", "PREMIUM DESIGN", "ULTIMATE SPEED"],
+    price: "€189",
+    heroImage: "/images/nikww.png",
+    cardImage: "/images/onee.png",
+    theme: { bg: "#0f0c1b", glow1: "#00f2fe", glow2: "#7928ca", accent: "#38ef7d" },
+  },
+  {
+    id: 2,
+    brand: "PUMA",
+    name: "L'ARTISTE",
+    headline: ["UNMATCHED COMFORT", "PREMIUM DESIGN", "ULTIMATE SPEED"],
+    price: "€245",
+    heroImage: "/images/twoo.png",
+    cardImage: "/images/twoo.png",
+    theme: { bg: "#060f12", glow1: "#00c853", glow2: "#0288d1", accent: "#00e676" },
+  },
+  {
+    id: 3,
+    brand: "PUMA",
+    name: "FLEXUS",
+    price: "€199",
+    headline: ["UNMATCHED COMFORT", "PREMIUM DESIGN", "ULTIMATE SPEED"],
+    heroImage: "/images/threee.png",
+    cardImage: "/images/threee.png",
+    theme: { bg: "#070b19", glow1: "#1d4ed8", glow2: "#f43f5e", accent: "#60a5fa" },
+  },
+  {
+    id: 4,
+    brand: "PUMA",
+    name: "CA PRO LUX",
+    price: "€154",
+    headline: ["UNMATCHED COMFORT", "PREMIUM DESIGN", "ULTIMATE SPEED"],
+    heroImage: "/images/fourr.png",
+    cardImage: "/images/fourr.png",
+    theme: { bg: "#18090c", glow1: "#9f1239", glow2: "#d97706", accent: "#fb7185" },
+  },
+  {
+    id: 5,
+    brand: "PUMA",
+    name: "SUEDE XL",
+    price: "€179",
+    headline: ["UNMATCHED COMFORT", "PREMIUM DESIGN", "ULTIMATE SPEED"],
+    heroImage: "/images/onee.png",
+    cardImage: "/images/onee.png",
+    theme: { bg: "#0e1117", glow1: "#3b82f6", glow2: "#64748b", accent: "#93c5fd" },
+  },
+];
 
-const HEADER_HEIGHT = 80;
+const displayProducts = [...products, ...products, ...products];
 
-export default function HeroSection() {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const bgRef = useRef<HTMLDivElement | null>(null);
-  const videoWrapRef = useRef<HTMLDivElement | null>(null);
-  const line1Ref = useRef<HTMLDivElement | null>(null);
-  const line2Ref = useRef<HTMLDivElement | null>(null);
-  const fadeRef = useRef<HTMLDivElement | null>(null);
+export default function HeroBanner() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const bgTextRef = useRef<HTMLDivElement>(null);
+  const glow1Ref = useRef<HTMLDivElement>(null);
+  const glow2Ref = useRef<HTMLDivElement>(null);
+  const shoeContainerRef = useRef<HTMLDivElement>(null);
+  const shoeShadowRef = useRef<HTMLDivElement>(null);
+  const textLinesRef = useRef<(HTMLSpanElement | null)[]>([]);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
+  const [currentIndex, setCurrentIndex] = useState(products.length);
 
+  const activeProductIndex = (currentIndex + 1) % products.length;
+  const activeProduct = products[activeProductIndex];
+
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
+      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
-      // DESKTOP
-      mm.add("(min-width: 640px)", () => {
-        const vw = window.innerWidth;
-        const vh = window.innerHeight;
+      gsap.set(bgTextRef.current, { opacity: 0, scale: 1.15, y: 30 });
+      gsap.set(textLinesRef.current, { y: 60, opacity: 0 });
+      gsap.set(shoeContainerRef.current, { opacity: 0, scale: 0.6, y: 80, rotateZ: -12 });
+      gsap.set(cardRefs.current.filter(Boolean), { opacity: 0, y: 50, scale: 0.9 });
 
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: "+=1450",
-            scrub: 1,
-            pin: true,
-            anticipatePin: 1,
-            onEnter: () =>
-              window.dispatchEvent(
-                new CustomEvent("hero-state", { detail: { active: true } }),
-              ),
-            onLeave: () =>
-              window.dispatchEvent(
-                new CustomEvent("hero-state", { detail: { active: false } }),
-              ),
-            onEnterBack: () =>
-              window.dispatchEvent(
-                new CustomEvent("hero-state", { detail: { active: true } }),
-              ),
-            onLeaveBack: () =>
-              window.dispatchEvent(
-                new CustomEvent("hero-state", { detail: { active: false } }),
-              ),
-          },
-        });
+      tl.to(bgTextRef.current, { opacity: 0.08, scale: 1, y: 0, duration: 2, ease: "power4.out" })
+        .to(textLinesRef.current, { y: 0, opacity: 1, duration: 1.2, stagger: 0.1, ease: "power4.out" }, "-=1.6")
+        .to(shoeContainerRef.current, { opacity: 1, scale: 1, y: 0, rotateZ: 0, duration: 1.8, ease: "elastic.out(1, 0.75)" }, "-=1.2")
+        .to(cardRefs.current.filter(Boolean), { opacity: 1, y: 0, scale: 1, duration: 1, stagger: 0.1, ease: "power3.out" }, "-=1.0");
 
-        tl.to(
-          fadeRef.current,
-          { opacity: 0, y: -40, duration: 0.5, ease: "power1.out" },
-          0.35,
-        )
-          .to(
-            line1Ref.current,
-            { x: "-45vw", opacity: 0, duration: 1, ease: "power2.inOut" },
-            0,
-          )
-          .to(
-            line2Ref.current,
-            { x: "45vw", opacity: 0, duration: 1, ease: "power2.inOut" },
-            0,
-          )
-          .to(
-            videoWrapRef.current,
-            {
-              width: Math.round(vw * 0.9),
-              height: Math.round(vh * 0.88),
-              borderRadius: 16,
-              duration: 1.6,
-              ease: "power2.inOut",
-            },
-            0.1,
-          )
-          .to(
-            bgRef.current,
-            { opacity: 0.25, scale: 1.08, duration: 1.6, ease: "power2.inOut" },
-            0.1,
-          );
-      });
-
-      // MOBILE
-      mm.add("(max-width: 639px)", () => {
-        const vw = window.innerWidth;
-        const vh = window.innerHeight;
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: "+=900",
-            scrub: 0.8,
-            pin: true,
-            anticipatePin: 1,
-            onEnter: () =>
-              window.dispatchEvent(
-                new CustomEvent("hero-state", { detail: { active: true } }),
-              ),
-            onLeave: () =>
-              window.dispatchEvent(
-                new CustomEvent("hero-state", { detail: { active: false } }),
-              ),
-            onEnterBack: () =>
-              window.dispatchEvent(
-                new CustomEvent("hero-state", { detail: { active: true } }),
-              ),
-            onLeaveBack: () =>
-              window.dispatchEvent(
-                new CustomEvent("hero-state", { detail: { active: false } }),
-              ),
-          },
-        });
-
-        tl.to(
-          fadeRef.current,
-          { opacity: 0, y: -30, duration: 0.45, ease: "power1.out" },
-          0.3,
-        )
-          .to(
-            line1Ref.current,
-            { x: "-110vw", opacity: 0, duration: 0.95, ease: "power2.inOut" },
-            0,
-          )
-          .to(
-            line2Ref.current,
-            { x: "110vw", opacity: 0, duration: 0.95, ease: "power2.inOut" },
-            0,
-          )
-          .to(
-            videoWrapRef.current,
-            {
-              width: Math.round(vw * 0.88),
-              height: Math.round(vh * 0.62),
-              borderRadius: 14,
-              duration: 1.45,
-              ease: "power2.inOut",
-            },
-            0.1,
-          )
-          .to(
-            bgRef.current,
-            {
-              opacity: 0.25,
-              scale: 1.06,
-              duration: 1.45,
-              ease: "power2.inOut",
-            },
-            0.1,
-          );
-      });
-
-      return () => mm.revert();
-    }, section);
+      gsap.to(shoeContainerRef.current, { y: -15, rotateZ: 2, duration: 3.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
+      gsap.to(shoeShadowRef.current, { scale: 0.85, opacity: 0.15, duration: 3.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
+    }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Responsive background positioning
   useEffect(() => {
-    const setBg = () => {
-      if (!bgRef.current) return;
-      const width = window.innerWidth;
-      bgRef.current.style.backgroundPosition =
-        width < 640 ? "75% center" : width < 1024 ? "60% 30%" : "center 30%";
-    };
-    setBg();
-    window.addEventListener("resize", setBg);
-    return () => window.removeEventListener("resize", setBg);
-  }, []);
+    if (!sectionRef.current) return;
+
+    gsap.to(sectionRef.current, { backgroundColor: activeProduct.theme.bg, duration: 1.2, ease: "power2.out" });
+    if (glow1Ref.current) gsap.to(glow1Ref.current, { backgroundColor: activeProduct.theme.glow1, duration: 1.4, ease: "power2.out" });
+    if (glow2Ref.current) gsap.to(glow2Ref.current, { backgroundColor: activeProduct.theme.glow2, duration: 1.4, ease: "power2.out" });
+
+    if (shoeContainerRef.current) {
+      gsap.fromTo(shoeContainerRef.current, { scale: 0.88, opacity: 0.3, rotateZ: -6 }, { scale: 1, opacity: 1, rotateZ: 0, duration: 0.7, ease: "power3.out" });
+    }
+  }, [activeProductIndex, activeProduct]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!sectionRef.current) return;
+    const { innerWidth, innerHeight } = window;
+    const x = (e.clientX / innerWidth - 0.5) * 2;
+    const y = (e.clientY / innerHeight - 0.5) * 2;
+
+    if (bgTextRef.current) gsap.to(bgTextRef.current, { x: x * 30, y: y * 30, duration: 1.2, ease: "power2.out" });
+    if (shoeContainerRef.current) gsap.to(shoeContainerRef.current, { rotateY: x * 12, rotateX: -y * 12, x: x * 10, y: y * 10, duration: 1, ease: "power2.out" });
+  };
+
+  const handleNext = () => setCurrentIndex((prev) => (prev >= displayProducts.length - 3 ? products.length : prev + 1));
+  const handlePrev = () => setCurrentIndex((prev) => (prev <= 0 ? products.length - 1 : prev - 1));
 
   return (
     <section
       ref={sectionRef}
-      id="hero-banner"
-      className="relative h-screen overflow-hidden bg-[#0f0a08]"
-      style={{
-        marginTop: `-${HEADER_HEIGHT}px`,
-        height: `calc(100svh + ${HEADER_HEIGHT}px)`,
-      }}
+      onMouseMove={handleMouseMove}
+      className="relative w-full h-screen max-h-screen bg-[#0f0c1b] text-white overflow-hidden flex flex-col justify-between selection:bg-white selection:text-black transition-colors duration-700 font-['Syne',sans-serif]"
     >
-      {/* Background Image */}
-      <div
-        ref={bgRef}
-        className="absolute inset-0 bg-[url('/images/new.png')] bg-cover bg-no-repeat will-change-transform"
-        style={{ backgroundPosition: "center 30%" }}
-      />
+      <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&display=swap" rel="stylesheet" />
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0f0a08]/80 via-[#0f0a08]/30 to-[#0f0a08]/80" />
+      {/* Dynamic Background Glows */}
+      <div ref={glow1Ref} className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] lg:w-[650px] h-[300px] sm:h-[500px] lg:h-[650px] bg-[#00f2fe]/20 rounded-full blur-[100px] sm:blur-[150px] pointer-events-none transition-colors duration-700" />
+      <div ref={glow2Ref} className="absolute bottom-5 left-5 w-[250px] sm:w-[350px] lg:w-[450px] h-[250px] sm:h-[350px] lg:h-[450px] bg-[#7928ca]/20 rounded-full blur-[90px] sm:blur-[130px] pointer-events-none transition-colors duration-700" />
 
-      {/* Content Container */}
-      <div
-        className="absolute left-0 right-0 flex flex-col items-center justify-center"
-        style={{
-          top: `${HEADER_HEIGHT}px`,
-          bottom: 0,
-          transform: "translateY(-8%)",
-        }}
-      >
-        {/* Video Card */}
-        <div
-          ref={videoWrapRef}
-          className="absolute inset-0 m-auto z-10 w-[260px] h-[360px] sm:w-[300px] sm:h-[420px] md:w-[380px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl shadow-black/60 will-change-transform"
-        >
-          <video
-            src="/videos/main-hero-video.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            className="w-full h-full object-cover"
-          />
-        </div>
+      {/* Watermark */}
+      <div ref={bgTextRef} className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
+        <span className="text-[30vw] lg:text-[24vw] font-black text-white/5 tracking-tighter leading-none uppercase stroke-text">HABS</span>
+      </div>
 
-        {/* Main Hero Headings & Branding with mix-blend-mode */}
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none text-center mix-blend-difference">
-          <div className="absolute top-[12%] flex flex-col items-center gap-1 uppercase">
-            <span className="text-[#c9a962] text-[10px] sm:text-xs tracking-[0.4em] font-medium">
-              SHAWQ
-            </span>
-            <span className="text-[#e8e0d5]/80 text-[8px] sm:text-[9px] tracking-[0.35em]">
-              FRAGRANCE HOUSE
-            </span>
+      {/* Main Container */}
+      <div className="relative z-20 flex-1 grid grid-cols-1 lg:grid-cols-12 items-center px-6 sm:px-12 lg:px-16 pt-16 sm:pt-20 lg:pt-12 pb-2 max-w-[1920px] mx-auto w-full h-full">
+        
+        {/* Left Column Text */}
+        <div className="lg:col-span-6 flex flex-col justify-center gap-3 sm:gap-4 z-20 mt-6 lg:mt-8 text-center lg:text-left items-center lg:items-start w-full">
+          <span className="text-xs sm:text-sm font-mono tracking-widest uppercase transition-colors duration-500" style={{ color: activeProduct.theme.accent }}>
+            {activeProduct.brand} // {activeProduct.name}
+          </span>
+
+          <div className="flex flex-col space-y-1 font-extrabold uppercase tracking-tight leading-[0.92] w-full max-w-full">
+            {activeProduct.headline.map((text, i) => (
+              <div key={`${activeProduct.id}-${i}`} className="w-full">
+                <span
+                  ref={(el) => { textLinesRef.current[i] = el; }}
+                  className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-white/60 text-[clamp(1.8rem,3.8vw,3.8rem)]"
+                >
+                  {text}
+                </span>
+              </div>
+            ))}
           </div>
 
-          <div className="flex flex-col items-center leading-[0.95] px-5">
-            <div
-              ref={line1Ref}
-              className="font-serif font-light text-[clamp(2.7rem,8vw,7rem)] text-[#f5f0eb] whitespace-nowrap"
-            >
-              Find the Scent
-            </div>
-            <div
-              ref={line2Ref}
-              className="font-serif font-light italic text-[clamp(2.7rem,8vw,7rem)] text-[#c73234] whitespace-nowrap"
-            >
-              That Becomes You
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom CTA / Intro */}
-        <div className="absolute inset-x-0 bottom-[8vh] z-20 flex justify-center">
-          <div
-            ref={fadeRef}
-            className="flex flex-col items-center gap-4 text-center px-6"
-          >
-            <p
-              className="text-[#f5f0eb] sm:text-[#cfc6bc] text-sm md:text-base max-w-md leading-relaxed drop-shadow-md font-medium"
-              style={{
-                fontFamily: "var(--font-body)",
-                letterSpacing: "0.03em",
-              }}
-            >
-              Distinctive compositions of oud, amber and rare botanicals made to
-              linger beyond the moment.
-            </p>
-
+          <div className="pt-2">
             <Link
               href="/products"
-              className="pointer-events-auto inline-flex items-center justify-center min-h-[48px] px-9 sm:px-10 py-3 border border-[#C9A962] bg-[#0D0907]/60 text-[#C9A962] font-medium text-xs sm:text-sm tracking-[0.22em] uppercase rounded-none relative group overflow-hidden backdrop-blur-md transition-all duration-500 hover:border-[#C9A962] hover:shadow-[0_0_25px_rgba(201,169,98,0.3)]"
+              className="inline-flex items-center gap-3 px-6 sm:px-7 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md text-white font-semibold text-xs sm:text-sm transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg"
             >
-              <span className="relative z-10 transition-colors duration-500 group-hover:text-[#0D0907]">
-                Explore the Signature
-              </span>
-              <div className="absolute inset-0 z-0 translate-y-full bg-[#C9A962] transition-transform duration-500 ease-out group-hover:translate-y-0" />
+              <span>Discover {activeProduct.name}</span>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
             </Link>
+          </div>
+        </div>
 
-            <div className="flex items-center gap-2 text-[#e8e0d5]/80 text-[9px] sm:text-[10px] tracking-[0.3em] uppercase font-medium">
-              <span>Scroll to Discover</span>
-              <span className="text-[#c9a962] animate-bounce text-sm">↓</span>
+        {/* Shoe Image Column */}
+        <div className="lg:col-span-6 relative flex items-center justify-center h-full perspective-1000 z-10">
+          <div ref={shoeContainerRef} className="relative w-full max-w-[280px] sm:max-w-[420px] lg:max-w-[540px] xl:max-w-[600px] transform-gpu" style={{ transformStyle: "preserve-3d" }}>
+            <div ref={shoeShadowRef} className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[70%] h-6 bg-black/80 rounded-[100%] blur-xl" />
+            <Image
+              src={activeProduct.heroImage}
+              alt={activeProduct.name}
+              width={1000}
+              height={750}
+              priority
+              className="w-full h-auto object-contain drop-shadow-[0_35px_35px_rgba(0,0,0,0.6)]"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Carousel Track */}
+      <div className="relative z-30 px-6 sm:px-12 lg:px-16 pb-6 pt-2 max-w-[1920px] mx-auto w-full flex justify-center lg:justify-end">
+        <div className="relative w-full sm:w-[500px] lg:w-[630px] xl:w-[680px]">
+          <button
+            onClick={handlePrev}
+            className="absolute -left-5 top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-white text-black shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
+            aria-label="Previous Products"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+
+          <button
+            onClick={handleNext}
+            className="absolute -right-5 top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-white text-black shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
+            aria-label="Next Products"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+
+          <div className="w-full overflow-hidden rounded-[1.8rem] py-1">
+            <div
+              className="flex items-center gap-4 transition-transform duration-500 ease-out"
+              style={{ transform: `translateX(-${currentIndex * (100 / 3 + 0.9)}%)` }}
+            >
+              {displayProducts.map((product, index) => {
+                const isCenter = index === currentIndex + 1;
+                return (
+                  <div
+                    key={`${product.id}-${index}`}
+                    ref={(el) => { cardRefs.current[index] = el; }}
+                    onClick={() => setCurrentIndex(index - 1)}
+                    className="w-[calc((100%-2rem)/3)] flex-shrink-0"
+                  >
+                    <VerticalProductCard product={product} isActive={isCenter} />
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
       </div>
+
+      <style jsx global>{`
+        .stroke-text {
+          -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.08);
+        }
+        .perspective-1000 {
+          perspective: 1000px;
+        }
+      `}</style>
     </section>
+  );
+}
+
+function VerticalProductCard({ product, isActive }: { product: any; isActive: boolean }) {
+  return (
+    <div
+      className={`group relative h-[210px] w-full rounded-[1.8rem] p-4 flex flex-col justify-between shadow-2xl backdrop-blur-xl transition-all duration-500 cursor-pointer overflow-hidden ${
+        isActive
+          ? "bg-white text-black scale-100 shadow-[0_20px_40px_rgba(0,0,0,0.5)] border-2 border-white opacity-100"
+          : "bg-white/20 text-white/70 scale-95 opacity-50 hover:opacity-80 border border-white/10"
+      }`}
+    >
+      <div className="z-10 flex items-center justify-between">
+        <h4 className={`text-[11px] font-black tracking-wider uppercase truncate ${isActive ? "text-black" : "text-white"}`}>
+          {product.name}
+        </h4>
+      </div>
+
+      <div className="relative w-full h-[95px] my-auto flex items-center justify-center z-10">
+        <div className={`absolute bottom-1 w-16 h-2.5 rounded-full blur-sm transition-all duration-500 ${isActive ? "bg-black/15" : "bg-black/40"}`} />
+        <Image
+          src={product.cardImage}
+          alt={product.name}
+          width={150}
+          height={100}
+          className={`object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.2)] transition-all duration-500 ${
+            isActive ? "scale-110 -rotate-3" : "scale-90"
+          }`}
+        />
+      </div>
+
+      <div className="flex items-center justify-between z-10">
+        <span className={`text-xs font-black ${isActive ? "text-black" : "text-white"}`}>
+          {product.price}
+        </span>
+
+        <button
+          className={`w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 ${
+            isActive ? "bg-black text-white" : "bg-white/20 text-white border border-white/20"
+          }`}
+          aria-label="Select Product"
+        >
+          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" />
+          </svg>
+        </button>
+      </div>
+    </div>
   );
 }

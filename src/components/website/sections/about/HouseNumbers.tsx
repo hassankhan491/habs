@@ -113,10 +113,8 @@ export default function HouseNumbers() {
           ref={introRef}
           className="mx-auto max-w-2xl text-center text-[15px] leading-[2] text-[#E8DED0]/50"
         >
-          since mmxxvi, SHAWQ has shaped iconic experiences through timeless
-          compositions and technical excellence — with a devoted atelier team
-          and presence in karachi, dubai and london, combining global reach
-          with deep olfactory expertise.
+          Since MMXXVI, HABS has shaped a new perspective on footwear through timeless style and curated collections — bringing together quality, individuality, and modern streetwear culture with a vision rooted in authenticity.
+
         </p>
 
         {/* Stats grid */}

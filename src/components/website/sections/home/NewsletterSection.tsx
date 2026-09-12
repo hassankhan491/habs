@@ -39,7 +39,7 @@ export default function NewsletterSection() {
         {/* Heading + Watermark wrapper */}
         {/* FIX: Removed large min-heights. Added small padding-bottom so the watermark doesn't get cut off. */}
         <div className="relative pb-6 sm:pb-10">
-          {/* SHAWQ Watermark (outlined text) */}
+          {/* HABSWatermark (outlined text) */}
           <div
             className="pointer-events-none absolute inset-0 flex items-center justify-center select-none"
             aria-hidden="true"
@@ -58,7 +58,7 @@ export default function NewsletterSection() {
                 whiteSpace: "nowrap",
               }}
             >
-              SHAWQ
+              HABS
             </span>
           </div>
 
@@ -113,9 +113,9 @@ export default function NewsletterSection() {
             type="submit"
             className="group flex items-center justify-center gap-2 self-start text-[10px] font-medium uppercase tracking-[0.25em] text-black transition-opacity duration-300 hover:opacity-60 sm:self-auto sm:text-xs"
             style={{ fontFamily: "var(--font-body)" }}
-            aria-label="Join Shawq newsletter"
+            aria-label="Join HABS newsletter"
           >
-            Join Shawq
+            Join HABS
             <svg
               className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1"
               fill="none"

@@ -134,7 +134,7 @@ export default function FullScreenMenu({ isOpen, onClose }: FullScreenMenuProps)
             style={{ fontFamily: 'var(--font-decorative)' }}
             className="absolute left-1/2 -translate-x-1/2 text-3xl text-[#f5f0eb] hover:opacity-80 transition-opacity"
           >
-            SHAWQ
+            HABS
           </Link>
 
           <div className="flex items-center gap-6 text-[#f5f0eb]">

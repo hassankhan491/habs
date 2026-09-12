@@ -98,7 +98,7 @@ export default function Header() {
             <Link
               href="/"
               className="justify-self-center"
-              aria-label="Shawq Home"
+              aria-label="Habs Home"
             >
               <h1
                 style={{ fontFamily: "var(--font-decorative)" }}
@@ -108,7 +108,7 @@ export default function Header() {
                     : "text-2xl sm:text-4xl lg:text-[50px] text-[var(--color-header-font)]"
                 }`}
               >
-                SHAWQ
+                HABS
               </h1>
             </Link>
 

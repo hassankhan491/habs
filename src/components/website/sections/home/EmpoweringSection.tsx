@@ -269,8 +269,8 @@ export default function EmpoweringSection() {
               textShadow: "0 2px 10px rgba(0, 0, 0, 0.7)",
             }}
           >
-            From royal oud to soft amber, Shawq crafts fragrances that speak
-            your language.
+           From timeless classics to fresh streetwear, HABS brings footwear that speaks your style.
+
           </p>
         </div>
       </div>

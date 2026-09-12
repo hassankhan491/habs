@@ -100,8 +100,8 @@ export default function Footer() {
     ],
     contact: [
       {
-        name: "hello@shawq.com",
-        href: "mailto:hello@shawq.com",
+        name: "habsthrift.official@gmail.com",
+        href: "mailto:habsthrift.official@gmail.com",
         icon: "M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z",
       },
       {
@@ -126,7 +126,7 @@ export default function Footer() {
       <div className="absolute top-10 left-1/4 w-96 h-96 bg-[#C9A962]/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-[#C9A962]/5 rounded-full blur-[120px] pointer-events-none" />
 
-      {/* SHAWQ Interactive Typography Section wrapped in the exact same max-width and padding container */}
+      {/* HAbS Interactive Typography Section wrapped in the exact same max-width and padding container */}
       <div className="relative w-full overflow-hidden bg-neutral-950/80 backdrop-blur-sm border-y border-white/5 my-4">
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 py-6">
           <svg
@@ -148,7 +148,7 @@ export default function Footer() {
               </radialGradient>
             </defs>
 
-            {/* 1. SHAWQ - Solid filled text layer (x set to 0 to align cleanly with container padding grid) */}
+            {/* 1. HABS - Solid filled text layer (x set to 0 to align cleanly with container padding grid) */}
             <text
               ref={svgTextRef}
               x="0"
@@ -160,10 +160,10 @@ export default function Footer() {
               fill="white"
               letterSpacing="15"
             >
-              SHAWQ
+              HABS
             </text>
 
-            {/* 2. SHAWQ INTERACTIVE GLOW */}
+            {/* 2. HABS INTERACTIVE GLOW */}
             <text
               x="0"
               y="210"
@@ -178,7 +178,7 @@ export default function Footer() {
               letterSpacing="15"
               className="pointer-events-none mix-blend-color-dodge transition-all duration-75"
             >
-              SHAWQ
+              HABS
             </text>
 
             {/* 3. FRAGRANCES WIREFRAME */}
@@ -229,7 +229,7 @@ export default function Footer() {
                 className="text-2xl font-display text-white tracking-widest"
                 style={{ fontFamily: "var(--font-decorative)" }}
               >
-                SHAWQ
+                HABS
               </h3>
             </div>
 
@@ -355,7 +355,7 @@ export default function Footer() {
           </div>
 
           <p className="text-[11px] text-gray-600 tracking-[0.2em] uppercase text-center">
-            © {new Date().getFullYear()} Shawq Fragrances. All Rights Reserved.
+            © {new Date().getFullYear()} HABS . All Rights Reserved.
           </p>
 
           {/* Luxury Back to Top Trigger */}
